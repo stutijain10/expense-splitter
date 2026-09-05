@@ -129,6 +129,22 @@ Choose an option: 6
 Goodbye!
 ```
 
+## Testing Instructions
+
+The application has been manually tested for the following scenarios:
+
+1. **Adding members** — verify each member is added with a unique ID and name, and appears correctly in subsequent operations.
+2. **Equal Split** — add an expense with 2+ participants using Equal Split; verify the amount divides evenly and balances reflect this correctly.
+3. **Percentage Split** — verify that percentages summing to 100% produce correct proportional balances, and that percentages **not** summing to 100% correctly trigger an `InvalidSplitException` with a clear error message (tested: 40% + 40% = 80% correctly rejected).
+4. **Exact Amount Split** — verify that exact amounts summing to the total bill are accepted, and mismatched sums are rejected the same way.
+5. **Invalid member references** — entering a non-existent member ID as payer or participant correctly triggers a `MemberNotFoundException` instead of crashing.
+6. **Empty participant list** — if all entered participant IDs are invalid, the expense is cancelled cleanly instead of proceeding with an empty split.
+7. **Non-numeric input** — entering text instead of a number at the menu or for amount/percentage fields is caught and re-prompted instead of crashing the program.
+8. **Settlement correctness** — verified that the "Settle Up" feature produces the mathematically minimum number of transactions to clear all balances (tested with 2 and 3-member scenarios).
+9. **File export** — verified that exporting a settlement report generates a correctly formatted `settlement_report.txt` file in the working directory.
+
+To run these tests yourself, follow the "How to Run" steps above and try the same scenarios with your own sample data.
+
 ## Design Concepts Demonstrated
 
 | Concept | Where it's used |
