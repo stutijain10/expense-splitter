@@ -43,7 +43,6 @@ expense-splitter/
 └── README.md
 ```
 
-
 ## Prerequisites
 
 You'll need Java's JDK installed. To check if you already have it, run:
@@ -51,14 +50,15 @@ You'll need Java's JDK installed. To check if you already have it, run:
 java -version
 javac -version
 ```
+
 If you get a version number back, you're good to go. If not, grab it from [Oracle's JDK downloads](https://www.oracle.com/java/technologies/downloads/) or use [OpenJDK](https://adoptium.net/) instead.
 
 ## Setup & Installation
-
 1. Clone the repo:
 ```
 git clone https://github.com/stutijain10/expense-splitter.git
 ```
+
 2. Move into the source folder — this is important, since all the commands below assume you're here:
 ```
 cd expense-splitter/src
