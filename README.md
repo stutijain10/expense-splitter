@@ -21,6 +21,7 @@ A command-line Java application for splitting group expenses fairly and settling
 
 ## Project Structure
 
+```
 expense-splitter/
 ├── src/
 │ └── com/
@@ -41,7 +42,7 @@ expense-splitter/
 │ └── engine/
 │ └── SettlementEngine.java # Calculates balances and simplifies debts
 └── README.md
-
+```
 
 ## Prerequisites
 
@@ -78,6 +79,7 @@ java com.splitter.Main
 
 
 ## Usage Example
+```
 Enter your group name: Goa Trip
 
 ===== Expense Splitter (Goa Trip) =====
@@ -118,7 +120,7 @@ Rahul pays Stuti Rs.500.00
 
 Choose an option: 6
 Goodbye!
-
+```
 
 ## Design Concepts Demonstrated
 
