@@ -24,23 +24,23 @@ A command-line Java application for splitting group expenses fairly and settling
 ```
 expense-splitter/
 ├── src/
-│ └── com/
-│ └── splitter/
-│ ├── Main.java # Entry point, CLI menu
-│ ├── model/
-│ │ ├── Member.java # Represents a person in the group
-│ │ ├── Expense.java # Represents a single expense
-│ │ └── Group.java # Holds members and expenses together
-│ ├── strategy/
-│ │ ├── SplitStrategy.java # Interface defining the split contract
-│ │ ├── EqualSplit.java # Equal split implementation
-│ │ ├── PercentageSplit.java # Percentage-based split implementation
-│ │ └── ExactAmountSplit.java # Exact-amount split implementation
-│ ├── exception/
-│ │ ├── InvalidSplitException.java
-│ │ └── MemberNotFoundException.java
-│ └── engine/
-│ └── SettlementEngine.java # Calculates balances and simplifies debts
+│   └── com/
+│       └── splitter/
+│           ├── Main.java              # Entry point, CLI menu
+│           ├── model/
+│           │   ├── Member.java        # Represents a person in the group
+│           │   ├── Expense.java       # Represents a single expense
+│           │   └── Group.java         # Holds members and expenses together
+│           ├── strategy/
+│           │   ├── SplitStrategy.java     # Interface defining the split contract
+│           │   ├── EqualSplit.java        # Equal split implementation
+│           │   ├── PercentageSplit.java   # Percentage-based split implementation
+│           │   └── ExactAmountSplit.java  # Exact-amount split implementation
+│           ├── exception/
+│           │   ├── InvalidSplitException.java
+│           │   └── MemberNotFoundException.java
+│           └── engine/
+│               └── SettlementEngine.java  # Calculates balances and simplifies debts
 └── README.md
 ```
 
@@ -49,34 +49,38 @@ expense-splitter/
 You need the Java Development Kit (JDK) installed on your system.
 
 To check if it's already installed, open a terminal and run:
+```
 java -version
 javac -version
+```
 
 If both commands return a version number (8 or higher), you're ready to go. If not, download and install the JDK from [https://www.oracle.com/java/technologies/downloads/](https://www.oracle.com/java/technologies/downloads/) or use [OpenJDK](https://adoptium.net/).
 
 ## Setup & Installation
 1. Clone this repository:
+```
 git clone https://github.com/stutijain10/expense-splitter.git
+```
 
 2. Navigate into the project's source folder:
-
+```
 cd expense-splitter/src
-
+```
 
 ## How to Compile
 
-From inside the `src` folder, compile all Java files at once:
-
-javac com/splitter/.java com/splitter/model/.java com/splitter/strategy/.java com/splitter/exception/.java com/splitter/engine/*.java
-
-
+From inside the `src` folder, run:
+```
+javac com/splitter/Main.java
+```
 This will generate `.class` files alongside each `.java` file.
+
 ## How to Run
 
 Still from inside the `src` folder, run:
-
+```
 java com.splitter.Main
-
+```
 
 ## Usage Example
 ```
@@ -118,6 +122,9 @@ Choose an option: 4
 --- Settlement Plan ---
 Rahul pays Stuti Rs.500.00
 
+Choose an option: 5
+Report exported successfully to settlement_report.txt
+
 Choose an option: 6
 Goodbye!
 ```
@@ -138,6 +145,7 @@ Goodbye!
 - Data is not persisted between sessions — all members and expenses exist only for the current run.
 - The application assumes valid numeric input after retry prompts; it does not handle every possible malformed input scenario.
 - Currency is hardcoded as Indian Rupees (displayed as "Rs.").
+- Equal splits may show tiny rounding differences (fractions of a rupee) due to floating-point arithmetic; this does not affect the correctness of the final settlement.
 
 ## Author
 
