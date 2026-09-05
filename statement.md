@@ -1,21 +1,21 @@
 # Problem Statement
 
 ## Problem Statement
-Splitting shared expenses among a group of people — such as friends on a trip, roommates, or colleagues sharing a meal — is a common real-world problem. Manually tracking who paid what and who owes whom becomes confusing and error-prone as the number of expenses and participants grows, often resulting in more transactions than necessary to settle up.
+Splitting expenses within a group — whether it's a trip with friends, a shared flat, or a team lunch — is something most people deal with regularly, and it's surprisingly easy to get wrong when done manually. People forget who paid for what, end up doing more transactions than necessary to settle up, or just avoid dealing with it altogether because it feels tedious. This project tries to solve that with a simple command-line tool.
 
 ## Scope of the Project
-This project implements a command-line based Expense Splitter application in Java. It allows a group of people to record shared expenses, choose how each expense should be split (equally, by percentage, or by exact amounts), and calculates the minimum number of transactions required to settle all debts within the group using a greedy debt-simplification algorithm. The scope is limited to a single in-memory session per run and does not include persistent storage, multi-currency support, or a graphical interface, in line with the CLI-based requirement of this evaluation.
+This is a Java-based CLI application that lets a group record shared expenses, pick how each one should be split, and then figure out the smallest possible set of transactions needed to settle everyone's balances. It supports three ways of splitting a bill — equally, by percentage, or by exact custom amounts — and uses a greedy algorithm to simplify the final settlement. The project is intentionally scoped to a single session (no saved data between runs), no database, and no GUI, since the goal was to build something CLI-executable that demonstrates core OOP principles rather than a production-ready app.
 
 ## Target Users
-- Groups of friends or family splitting costs during trips or outings
-- Roommates sharing recurring household expenses
-- Colleagues splitting costs for team lunches, gifts, or shared purchases
-- Anyone needing a simple, no-signup way to fairly divide a shared bill
+- Friends splitting costs on a trip
+- Roommates dividing shared household bills
+- Coworkers splitting a team lunch or a shared gift
+- Basically anyone who wants a quick way to divide a bill fairly without installing a full app or signing up for anything
 
 ## High-Level Features
-- Add members to an expense-sharing group
-- Record expenses with three flexible split methods: Equal, Percentage-based, and Exact-amount
-- View real-time balances showing who owes money and who is owed money
-- Automatically calculate the minimum number of transactions needed to settle all debts
-- Export a settlement report to a text file
-- Robust input validation and custom exception handling to prevent invalid data and crashes
+- Add people to a group
+- Record an expense and choose between Equal, Percentage, or Exact Amount splitting
+- Check who currently owes money and who's owed money
+- Get a settlement plan that minimizes the number of payments needed
+- Export the final settlement to a text file
+- Input validation and custom exceptions so bad input doesn't crash the program or silently produce wrong numbers

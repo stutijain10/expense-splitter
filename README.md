@@ -1,88 +1,87 @@
 # Expense Splitter (CLI)
 
-A command-line Java application for splitting group expenses fairly and settling debts with the minimum number of transactions — similar to how apps like Splitwise work, but built from scratch to demonstrate core Object-Oriented Programming concepts.
+A Java command-line application that helps a group of people split shared expenses and figure out who owes whom. Think of it like a simplified, from-scratch version of Splitwise — I built this to apply the core OOP concepts from this course to something that actually solves a problem I've run into myself while splitting bills with friends.
 
 ## Features
 
 - Add members to a group
-- Add expenses with three different split types:
-  - **Equal Split** — divides the amount evenly among participants
-  - **Percentage Split** — each participant pays a specified percentage
-  - **Exact Amount Split** — each participant pays a manually specified amount
-- View current balances (who owes money, who is owed money)
-- Settle up — calculates the minimum number of transactions needed to clear all debts using a greedy debt-simplification algorithm
-- Export a settlement report to a text file
-- Input validation and custom exception handling to prevent crashes and invalid data
+- Add an expense and split it three different ways:
+  - **Equal Split** — everyone pays the same share
+  - **Percentage Split** — each person pays a set percentage of the bill
+  - **Exact Amount Split** — each person pays a manually entered amount
+- Check current balances (who's owed money, who owes money)
+- Settle up automatically — the app works out the fewest transactions needed to clear everyone's debts, instead of listing every single owe-relationship separately
+- Export the settlement summary to a text file
+- Handles bad input and invalid splits gracefully instead of crashing
 
 ## Technologies Used
 
-- Java (JDK 21 — tested and confirmed working on this version; JDK 8+ should also work)
-- No external libraries or frameworks — built entirely with core Java
+- Java (built and tested on JDK 21, though anything from JDK 8 onward should work fine)
+- No external libraries — everything here is plain core Java
 
 ## Project Structure
-
 ```
 expense-splitter/
 ├── src/
-│   └── com/
-│       └── splitter/
-│           ├── Main.java              # Entry point, CLI menu
-│           ├── model/
-│           │   ├── Member.java        # Represents a person in the group
-│           │   ├── Expense.java       # Represents a single expense
-│           │   └── Group.java         # Holds members and expenses together
-│           ├── strategy/
-│           │   ├── SplitStrategy.java     # Interface defining the split contract
-│           │   ├── EqualSplit.java        # Equal split implementation
-│           │   ├── PercentageSplit.java   # Percentage-based split implementation
-│           │   └── ExactAmountSplit.java  # Exact-amount split implementation
-│           ├── exception/
-│           │   ├── InvalidSplitException.java
-│           │   └── MemberNotFoundException.java
-│           └── engine/
-│               └── SettlementEngine.java  # Calculates balances and simplifies debts
+│ └── com/
+│ └── splitter/
+│ ├── Main.java # Entry point, runs the CLI menu
+│ ├── model/
+│ │ ├── Member.java # A person in the group
+│ │ ├── Expense.java # A single expense record
+│ │ └── Group.java # Holds the members and expenses together
+│ ├── strategy/
+│ │ ├── SplitStrategy.java # Interface all split types follow
+│ │ ├── EqualSplit.java
+│ │ ├── PercentageSplit.java
+│ │ └── ExactAmountSplit.java
+│ ├── exception/
+│ │ ├── InvalidSplitException.java
+│ │ └── MemberNotFoundException.java
+│ └── engine/
+│ └── SettlementEngine.java # Does the balance math and debt simplification
 └── README.md
 ```
 
+
 ## Prerequisites
 
-You need the Java Development Kit (JDK) installed on your system.
-
-To check if it's already installed, open a terminal and run:
+You'll need Java's JDK installed. To check if you already have it, run:
 ```
 java -version
 javac -version
 ```
-
-If both commands return a version number (8 or higher), you're ready to go. If not, download and install the JDK from [https://www.oracle.com/java/technologies/downloads/](https://www.oracle.com/java/technologies/downloads/) or use [OpenJDK](https://adoptium.net/).
+If you get a version number back, you're good to go. If not, grab it from [Oracle's JDK downloads](https://www.oracle.com/java/technologies/downloads/) or use [OpenJDK](https://adoptium.net/) instead.
 
 ## Setup & Installation
-1. Clone this repository:
+
+1. Clone the repo:
 ```
 git clone https://github.com/stutijain10/expense-splitter.git
 ```
-
-2. Navigate into the project's source folder:
+2. Move into the source folder — this is important, since all the commands below assume you're here:
 ```
 cd expense-splitter/src
 ```
 
 ## How to Compile
 
-From inside the `src` folder, run:
+From inside `src`, just run:
 ```
 javac com/splitter/Main.java
 ```
-This will generate `.class` files alongside each `.java` file.
+You only need to compile `Main.java` — Java automatically finds and compiles everything else it depends on (all the model, strategy, exception, and engine classes), so you don't need to list every file manually.
 
 ## How to Run
 
-Still from inside the `src` folder, run:
+Still inside `src`:
 ```
 java com.splitter.Main
 ```
 
 ## Usage Example
+
+Here's roughly what a session looks like:
 ```
 Enter your group name: Goa Trip
 
@@ -131,37 +130,37 @@ Goodbye!
 
 ## Testing Instructions
 
-The application has been manually tested for the following scenarios:
+I tested the app manually across a bunch of scenarios rather than writing automated tests, since the focus here was on applying OOP concepts correctly:
 
-1. **Adding members** — verify each member is added with a unique ID and name, and appears correctly in subsequent operations.
-2. **Equal Split** — add an expense with 2+ participants using Equal Split; verify the amount divides evenly and balances reflect this correctly.
-3. **Percentage Split** — verify that percentages summing to 100% produce correct proportional balances, and that percentages **not** summing to 100% correctly trigger an `InvalidSplitException` with a clear error message (tested: 40% + 40% = 80% correctly rejected).
-4. **Exact Amount Split** — verify that exact amounts summing to the total bill are accepted, and mismatched sums are rejected the same way.
-5. **Invalid member references** — entering a non-existent member ID as payer or participant correctly triggers a `MemberNotFoundException` instead of crashing.
-6. **Empty participant list** — if all entered participant IDs are invalid, the expense is cancelled cleanly instead of proceeding with an empty split.
-7. **Non-numeric input** — entering text instead of a number at the menu or for amount/percentage fields is caught and re-prompted instead of crashing the program.
-8. **Settlement correctness** — verified that the "Settle Up" feature produces the mathematically minimum number of transactions to clear all balances (tested with 2 and 3-member scenarios).
-9. **File export** — verified that exporting a settlement report generates a correctly formatted `settlement_report.txt` file in the working directory.
+1. Adding members and checking they show up correctly afterward.
+2. Equal split with 2+ people — checked the math divides evenly.
+3. Percentage split — tried both valid percentages (adding to 100%) and deliberately wrong ones (like 40% + 40%) to confirm the app catches the mismatch and throws `InvalidSplitException` with a clear message instead of just producing wrong numbers.
+4. Same idea for Exact Amount split — mismatched totals get rejected.
+5. Entered a member ID that doesn't exist as a payer/participant — confirmed `MemberNotFoundException` catches it cleanly.
+6. Tried entering only invalid participant IDs for an expense — the app cancels instead of trying to split among nobody.
+7. Typed letters instead of numbers at various prompts — the app re-asks instead of crashing.
+8. Checked that "Settle Up" actually gives the minimum number of transactions, not just a raw list of who-owes-who per expense.
+9. Ran the export feature and opened the resulting `settlement_report.txt` to confirm it's formatted properly.
 
-To run these tests yourself, follow the "How to Run" steps above and try the same scenarios with your own sample data.
+If you want to try these yourself, just follow the run instructions above and repeat the same scenarios with your own numbers.
 
 ## Design Concepts Demonstrated
 
-| Concept | Where it's used |
+| Concept | Where it shows up |
 |---|---|
-| **Encapsulation** | Private fields with getters in `Member`, `Expense`, and `Group` |
-| **Abstraction** | `SplitStrategy` interface defines *what* a split does without specifying *how* |
-| **Polymorphism** | `EqualSplit`, `PercentageSplit`, and `ExactAmountSplit` all implement `SplitStrategy` differently, but are used interchangeably in `SettlementEngine` |
-| **Custom Exception Handling** | `InvalidSplitException` validates that splits mathematically add up correctly; `MemberNotFoundException` handles invalid member references |
-| **Collections** | `ArrayList` and `HashMap` used throughout for storing members, expenses, and balances |
-| **File I/O** | Settlement reports can be exported to a `.txt` file using `FileWriter` |
+| **Encapsulation** | `Member`, `Expense`, and `Group` all keep their fields private and expose them only through getters |
+| **Abstraction** | The `SplitStrategy` interface defines *what* a split calculation should return, without caring *how* each type does it |
+| **Polymorphism** | `EqualSplit`, `PercentageSplit`, and `ExactAmountSplit` all implement `SplitStrategy` in their own way, but `SettlementEngine` treats them identically |
+| **Custom Exceptions** | `InvalidSplitException` catches splits that don't mathematically add up; `MemberNotFoundException` catches bad member references |
+| **Collections** | `ArrayList` and `HashMap` are used throughout to store members, expenses, and balances |
+| **File I/O** | The settlement report export uses `FileWriter` to write results to disk |
 
 ## Known Limitations
 
-- Data is not persisted between sessions — all members and expenses exist only for the current run.
-- The application assumes valid numeric input after retry prompts; it does not handle every possible malformed input scenario.
-- Currency is hardcoded as Indian Rupees (displayed as "Rs.").
-- Equal splits may show tiny rounding differences (fractions of a rupee) due to floating-point arithmetic; this does not affect the correctness of the final settlement.
+- Nothing is saved between runs — once you exit, all data is gone. Adding persistence felt out of scope for what this course was focused on.
+- Input validation covers the main failure points (bad numbers, missing members, invalid splits), but I haven't tried to bulletproof every possible weird input.
+- Currency is hardcoded to Indian Rupees, shown as "Rs." — wasn't planning to make this multi-currency for a CLI demo project.
+- Because of how floating-point math works in Java, equal splits can occasionally be off by a fraction of a rupee. It doesn't affect whether the settlement is correct, just a quirk worth mentioning.
 
 ## Author
 
